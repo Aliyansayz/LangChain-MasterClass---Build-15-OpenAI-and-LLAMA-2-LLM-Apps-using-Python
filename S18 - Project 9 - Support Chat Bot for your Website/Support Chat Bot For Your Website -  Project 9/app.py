@@ -3,8 +3,8 @@ from utils import *
 import constants
 
 # Creating Session State Variable
-if 'HuggingFace_API_Key' not in st.session_state:
-    st.session_state['HuggingFace_API_Key'] =''
+if 'OpenAI_API_Key' not in st.session_state:
+    st.session_state['OpenAI_API_Key'] =''
 if 'Pinecone_API_Key' not in st.session_state:
     st.session_state['Pinecone_API_Key'] =''
 
@@ -16,7 +16,7 @@ st.title('🤖 AI Assistance For Website')
 
 # Sidebar to capture the API keys
 st.sidebar.title("😎🗝️")
-st.session_state['HuggingFace_API_Key']= st.sidebar.text_input("What's your HuggingFace API key?",type="password")
+st.session_state['OpenAI_API_Key']= st.sidebar.text_input("What's your OpenAI API key?",type="password")
 st.session_state['Pinecone_API_Key']= st.sidebar.text_input("What's your Pinecone API key?",type="password")
 
 load_button = st.sidebar.button("Load data to Pinecone", key="load_button")
@@ -24,10 +24,14 @@ load_button = st.sidebar.button("Load data to Pinecone", key="load_button")
 #If the bove button is clicked, pushing the data to Pinecone...
 if load_button:
     #Proceed only if API keys are provided
-    if st.session_state['HuggingFace_API_Key'] !="" and st.session_state['Pinecone_API_Key']!="" :
+    if st.session_state['OpenAI_API_Key'] !="" and st.session_state['Pinecone_API_Key']!="" :
 
         #Fetch data from site
         site_data=get_website_data(constants.WEBSITE_URL)
+        st.write("Data pull done...")
+
+        #Fetch data from files
+        site_data=load_docs(constants.WEBSITE_URL)
         st.write("Data pull done...")
 
         #Split data into chunks
@@ -57,7 +61,7 @@ submit = st.button("Search")
 
 if submit:
     #Proceed only if API keys are provided
-    if st.session_state['HuggingFace_API_Key'] !="" and st.session_state['Pinecone_API_Key']!="" :
+    if st.session_state['OpenAI_API_Key'] !="" and st.session_state['Pinecone_API_Key']!="" :
 
         #Creating embeddings instance
         embeddings=create_embeddings()
