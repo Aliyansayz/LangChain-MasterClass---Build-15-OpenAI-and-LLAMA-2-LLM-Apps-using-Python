@@ -12,7 +12,7 @@ st.header("Please upload your CSV file here:")
 data = st.file_uploader("Upload CSV file",type="csv")
 
 query = st.text_area("Enter your query")
-key =  st.text_area("Enter your Api key")
+key =  st.text_area("Enter your Api key" ,type="password")
 button = st.button("Generate Response")
 
 if button:
