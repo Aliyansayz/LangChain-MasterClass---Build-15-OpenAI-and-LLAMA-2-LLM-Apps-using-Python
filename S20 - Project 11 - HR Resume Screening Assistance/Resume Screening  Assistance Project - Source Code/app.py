@@ -28,13 +28,13 @@ def main():
             st.session_state['unique_id']=uuid.uuid4().hex
 
             #Create a documents list out of all the user uploaded pdf files
-            final_docs_list=create_docs(pdf,st.session_state['unique_id'])
+            final_docs_list= form_document_stack(pdf,st.session_state['unique_id'])
 
             #Displaying the count of resumes that have been uploaded
             st.write("*Resumes uploaded* :"+str(len(final_docs_list)))
 
             #Create embeddings instance
-            embeddings=create_embeddings_load_data()
+            embeddings= create_embeddings_load_data()
 
             #Push data to PINECONE
             push_to_pinecone("e697b71c-d5ed-4c66-8625-ac1c403a2df1","us-west1-gcp-free","test",embeddings,final_docs_list)
